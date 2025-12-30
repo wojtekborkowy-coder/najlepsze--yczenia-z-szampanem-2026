@@ -106,55 +106,88 @@ const Fireworks: React.FC = () => {
   return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0 opacity-60" />;
 };
 
-// --- KOMPONENT SZAMPANA (Nowość) ---
+// --- KOMPONENT SZAMPANA (Z DŁONIAMI) ---
 const ChampagneClink: React.FC = () => {
   return (
-    <div className="flex justify-center items-center py-6 animate-in fade-in zoom-in duration-1000 delay-500">
-      <div className="relative w-24 h-24 group cursor-pointer">
-        {/* Style animacji */}
+    <div className="flex justify-center items-center py-10 animate-in fade-in zoom-in duration-1000 delay-500 overflow-hidden">
+      <div className="relative w-64 h-40 group cursor-pointer flex justify-center items-end">
+        
         <style>{`
-          @keyframes clink-left {
+          @keyframes toast-left {
             0%, 100% { transform: rotate(0deg) translateX(0); }
-            50% { transform: rotate(15deg) translateX(10px); }
+            50% { transform: rotate(10deg) translateX(15px) translateY(-5px); }
           }
-          @keyframes clink-right {
+          @keyframes toast-right {
             0%, 100% { transform: rotate(0deg) translateX(0); }
-            50% { transform: rotate(-15deg) translateX(-10px); }
+            50% { transform: rotate(-10deg) translateX(-15px) translateY(-5px); }
           }
-          .glass-left { animation: clink-left 3s infinite ease-in-out; transform-origin: bottom center; }
-          .glass-right { animation: clink-right 3s infinite ease-in-out; transform-origin: bottom center; }
+          @keyframes spark-flash {
+            0%, 40%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.5) rotate(45deg); }
+          }
+          .hand-left { animation: toast-left 2.5s infinite ease-in-out; transform-origin: bottom left; }
+          .hand-right { animation: toast-right 2.5s infinite ease-in-out; transform-origin: bottom right; }
+          .spark { animation: spark-flash 2.5s infinite ease-in-out; }
         `}</style>
         
-        {/* Lewy kieliszek */}
-        <div className="absolute left-2 top-0 glass-left">
-           <svg width="40" height="60" viewBox="0 0 40 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 0V20C5 28.2843 11.7157 35 20 35C28.2843 35 35 28.2843 35 20V0" stroke="#fbbf24" strokeWidth="2"/>
-              <path d="M20 35V55" stroke="#fbbf24" strokeWidth="2"/>
-              <path d="M10 55H30" stroke="#fbbf24" strokeWidth="2"/>
-              {/* Płyn */}
-              <path d="M7 10V20C7 25 12 33 20 33C28 33 33 25 33 20V10" fill="#fbbf24" fillOpacity="0.6"/>
-              {/* Bąbelki */}
-              <circle cx="15" cy="15" r="1" fill="white" className="animate-pulse"/>
-              <circle cx="25" cy="22" r="1" fill="white" className="animate-pulse delay-75"/>
+        {/* LEWA RĘKA Z KIELISZKIEM */}
+        <div className="absolute left-4 bottom-0 hand-left z-10">
+           <svg width="100" height="120" viewBox="0 0 100 120" fill="none">
+              {/* Dłoń (zarys) */}
+              <path d="M10 120 V 80 Q 10 60 30 60 L 50 65" stroke="#71717a" strokeWidth="3" strokeLinecap="round" />
+              <path d="M30 60 Q 40 50 55 55" stroke="#71717a" strokeWidth="3" strokeLinecap="round" /> {/* Kciuk */}
+              <path d="M50 65 Q 60 65 65 75" stroke="#71717a" strokeWidth="3" strokeLinecap="round" /> {/* Palce */}
+              
+              {/* Kieliszek */}
+              <g transform="translate(45, 10) rotate(-5)">
+                <path d="M15 0 L 15 40 Q 15 50 25 50 Q 35 50 35 40 L 35 0" stroke="#fbbf24" strokeWidth="2" fill="url(#champagne-gradient)"/>
+                <path d="M25 50 L 25 90" stroke="#fbbf24" strokeWidth="2"/> {/* Nóżka */}
+                <path d="M15 90 L 35 90" stroke="#fbbf24" strokeWidth="2"/> {/* Podstawka */}
+                {/* Płyn */}
+                <path d="M17 15 L 17 40 Q 17 48 25 48 Q 33 48 33 40 L 33 15" fill="#fbbf24" fillOpacity="0.8" />
+                {/* Bąbelki */}
+                <circle cx="20" cy="30" r="1.5" fill="white" className="animate-pulse" />
+                <circle cx="28" cy="25" r="1" fill="white" className="animate-pulse delay-100" />
+              </g>
            </svg>
         </div>
 
-        {/* Prawy kieliszek */}
-        <div className="absolute right-2 top-0 glass-right">
-           <svg width="40" height="60" viewBox="0 0 40 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 0V20C5 28.2843 11.7157 35 20 35C28.2843 35 35 28.2843 35 20V0" stroke="#fbbf24" strokeWidth="2"/>
-              <path d="M20 35V55" stroke="#fbbf24" strokeWidth="2"/>
-              <path d="M10 55H30" stroke="#fbbf24" strokeWidth="2"/>
-              {/* Płyn */}
-              <path d="M7 10V20C7 25 12 33 20 33C28 33 33 25 33 20V10" fill="#fbbf24" fillOpacity="0.6"/>
-              {/* Bąbelki */}
-              <circle cx="15" cy="18" r="1" fill="white" className="animate-pulse delay-100"/>
-              <circle cx="22" cy="12" r="1" fill="white" className="animate-pulse delay-200"/>
+        {/* PRAWA RĘKA Z KIELISZKIEM */}
+        <div className="absolute right-4 bottom-0 hand-right z-10">
+           <svg width="100" height="120" viewBox="0 0 100 120" fill="none">
+              {/* Dłoń (zarys) */}
+              <path d="M90 120 V 80 Q 90 60 70 60 L 50 65" stroke="#71717a" strokeWidth="3" strokeLinecap="round" />
+              <path d="M70 60 Q 60 50 45 55" stroke="#71717a" strokeWidth="3" strokeLinecap="round" /> {/* Kciuk */}
+              <path d="M50 65 Q 40 65 35 75" stroke="#71717a" strokeWidth="3" strokeLinecap="round" /> {/* Palce */}
+              
+              {/* Kieliszek */}
+              <g transform="translate(15, 10) rotate(5)">
+                <path d="M15 0 L 15 40 Q 15 50 25 50 Q 35 50 35 40 L 35 0" stroke="#fbbf24" strokeWidth="2" fill="url(#champagne-gradient)"/>
+                <path d="M25 50 L 25 90" stroke="#fbbf24" strokeWidth="2"/> {/* Nóżka */}
+                <path d="M15 90 L 35 90" stroke="#fbbf24" strokeWidth="2"/> {/* Podstawka */}
+                {/* Płyn */}
+                <path d="M17 15 L 17 40 Q 17 48 25 48 Q 33 48 33 40 L 33 15" fill="#fbbf24" fillOpacity="0.8" />
+                {/* Bąbelki */}
+                <circle cx="22" cy="35" r="1.5" fill="white" className="animate-pulse delay-75" />
+                <circle cx="30" cy="20" r="1" fill="white" className="animate-pulse delay-200" />
+              </g>
+              
+              <defs>
+                <linearGradient id="champagne-gradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.2"/>
+                  <stop offset="100%" stopColor="#fbbf24" stopOpacity="0.5"/>
+                </linearGradient>
+              </defs>
            </svg>
         </div>
-        
-        {/* Błysk stuknięcia */}
-        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rounded-full blur-sm opacity-0 animate-[ping_3s_infinite_1.5s]"></div>
+
+        {/* BŁYSK (SPARK) W ŚRODKU */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 spark">
+           <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+             <path d="M20 0 L 22 18 L 40 20 L 22 22 L 20 40 L 18 22 L 0 20 L 18 18 Z" fill="white" fillOpacity="0.9" />
+           </svg>
+        </div>
+
       </div>
     </div>
   );
@@ -325,7 +358,7 @@ const App: React.FC = () => {
               ))}
             </div>
 
-            {/* TUTAJ DODAŁEM SZAMPANA */}
+            {/* KOMPONENT SZAMPANA */}
             <ChampagneClink />
 
             <div className="text-center mb-8">
