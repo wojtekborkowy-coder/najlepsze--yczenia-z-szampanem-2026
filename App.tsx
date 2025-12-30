@@ -106,88 +106,109 @@ const Fireworks: React.FC = () => {
   return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0 opacity-60" />;
 };
 
-// --- KOMPONENT SZAMPANA (Z DŁONIAMI) ---
+// --- KOMPONENT SZAMPANA (REALISTYCZNY VECTOR) ---
 const ChampagneClink: React.FC = () => {
   return (
-    <div className="flex justify-center items-center py-10 animate-in fade-in zoom-in duration-1000 delay-500 overflow-hidden">
-      <div className="relative w-64 h-40 group cursor-pointer flex justify-center items-end">
+    <div className="flex justify-center items-center py-12 animate-in fade-in zoom-in duration-1000 delay-500 overflow-hidden">
+      <div className="relative w-96 h-56 group cursor-pointer flex justify-center items-end">
         
         <style>{`
           @keyframes toast-left {
             0%, 100% { transform: rotate(0deg) translateX(0); }
-            50% { transform: rotate(10deg) translateX(15px) translateY(-5px); }
+            50% { transform: rotate(5deg) translateX(15px) translateY(-5px); }
           }
           @keyframes toast-right {
             0%, 100% { transform: rotate(0deg) translateX(0); }
-            50% { transform: rotate(-10deg) translateX(-15px) translateY(-5px); }
+            50% { transform: rotate(-5deg) translateX(-15px) translateY(-5px); }
           }
           @keyframes spark-flash {
-            0%, 40%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.5) rotate(45deg); }
+            0%, 48%, 100% { opacity: 0; transform: scale(0.5) translate(-50%, -50%); }
+            50% { opacity: 1; transform: scale(1.5) rotate(45deg) translate(-50%, -50%); }
           }
-          .hand-left { animation: toast-left 2.5s infinite ease-in-out; transform-origin: bottom left; }
-          .hand-right { animation: toast-right 2.5s infinite ease-in-out; transform-origin: bottom right; }
-          .spark { animation: spark-flash 2.5s infinite ease-in-out; }
+          .hand-left { animation: toast-left 3s infinite ease-in-out; transform-origin: bottom left; }
+          .hand-right { animation: toast-right 3s infinite ease-in-out; transform-origin: bottom right; }
+          .spark { animation: spark-flash 3s infinite ease-in-out; }
         `}</style>
         
-        {/* LEWA RĘKA Z KIELISZKIEM */}
-        <div className="absolute left-4 bottom-0 hand-left z-10">
-           <svg width="100" height="120" viewBox="0 0 100 120" fill="none">
-              {/* Dłoń (zarys) */}
-              <path d="M10 120 V 80 Q 10 60 30 60 L 50 65" stroke="#71717a" strokeWidth="3" strokeLinecap="round" />
-              <path d="M30 60 Q 40 50 55 55" stroke="#71717a" strokeWidth="3" strokeLinecap="round" /> {/* Kciuk */}
-              <path d="M50 65 Q 60 65 65 75" stroke="#71717a" strokeWidth="3" strokeLinecap="round" /> {/* Palce */}
-              
-              {/* Kieliszek */}
-              <g transform="translate(45, 10) rotate(-5)">
-                <path d="M15 0 L 15 40 Q 15 50 25 50 Q 35 50 35 40 L 35 0" stroke="#fbbf24" strokeWidth="2" fill="url(#champagne-gradient)"/>
-                <path d="M25 50 L 25 90" stroke="#fbbf24" strokeWidth="2"/> {/* Nóżka */}
-                <path d="M15 90 L 35 90" stroke="#fbbf24" strokeWidth="2"/> {/* Podstawka */}
-                {/* Płyn */}
-                <path d="M17 15 L 17 40 Q 17 48 25 48 Q 33 48 33 40 L 33 15" fill="#fbbf24" fillOpacity="0.8" />
-                {/* Bąbelki */}
-                <circle cx="20" cy="30" r="1.5" fill="white" className="animate-pulse" />
-                <circle cx="28" cy="25" r="1" fill="white" className="animate-pulse delay-100" />
-              </g>
-           </svg>
-        </div>
-
-        {/* PRAWA RĘKA Z KIELISZKIEM */}
-        <div className="absolute right-4 bottom-0 hand-right z-10">
-           <svg width="100" height="120" viewBox="0 0 100 120" fill="none">
-              {/* Dłoń (zarys) */}
-              <path d="M90 120 V 80 Q 90 60 70 60 L 50 65" stroke="#71717a" strokeWidth="3" strokeLinecap="round" />
-              <path d="M70 60 Q 60 50 45 55" stroke="#71717a" strokeWidth="3" strokeLinecap="round" /> {/* Kciuk */}
-              <path d="M50 65 Q 40 65 35 75" stroke="#71717a" strokeWidth="3" strokeLinecap="round" /> {/* Palce */}
-              
-              {/* Kieliszek */}
-              <g transform="translate(15, 10) rotate(5)">
-                <path d="M15 0 L 15 40 Q 15 50 25 50 Q 35 50 35 40 L 35 0" stroke="#fbbf24" strokeWidth="2" fill="url(#champagne-gradient)"/>
-                <path d="M25 50 L 25 90" stroke="#fbbf24" strokeWidth="2"/> {/* Nóżka */}
-                <path d="M15 90 L 35 90" stroke="#fbbf24" strokeWidth="2"/> {/* Podstawka */}
-                {/* Płyn */}
-                <path d="M17 15 L 17 40 Q 17 48 25 48 Q 33 48 33 40 L 33 15" fill="#fbbf24" fillOpacity="0.8" />
-                {/* Bąbelki */}
-                <circle cx="22" cy="35" r="1.5" fill="white" className="animate-pulse delay-75" />
-                <circle cx="30" cy="20" r="1" fill="white" className="animate-pulse delay-200" />
-              </g>
-              
-              <defs>
-                <linearGradient id="champagne-gradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.2"/>
-                  <stop offset="100%" stopColor="#fbbf24" stopOpacity="0.5"/>
+        <svg width="400" height="250" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                {/* Gradient dłoni (odcień skóry w cieniu) */}
+                <linearGradient id="skin-gradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#52525b"/> {/* Zinc-600 */}
+                    <stop offset="100%" stopColor="#27272a"/> {/* Zinc-800 */}
                 </linearGradient>
-              </defs>
-           </svg>
-        </div>
+                {/* Gradient złota dla płynu */}
+                <linearGradient id="gold-liquid" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#ca8a04"/>
+                    <stop offset="50%" stopColor="#fbbf24"/>
+                    <stop offset="100%" stopColor="#ca8a04"/>
+                </linearGradient>
+                 {/* Refleks na szkle */}
+                <linearGradient id="glass-reflection" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="white" stopOpacity="0.1"/>
+                    <stop offset="50%" stopColor="white" stopOpacity="0.4"/>
+                    <stop offset="100%" stopColor="white" stopOpacity="0.1"/>
+                </linearGradient>
+            </defs>
 
-        {/* BŁYSK (SPARK) W ŚRODKU */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 spark">
-           <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-             <path d="M20 0 L 22 18 L 40 20 L 22 22 L 20 40 L 18 22 L 0 20 L 18 18 Z" fill="white" fillOpacity="0.9" />
-           </svg>
-        </div>
+            {/* --- LEWA STRONA --- */}
+            <g className="hand-left" transform-origin="100 250">
+                {/* Rękaw marynarki */}
+                <path d="M0 250 L 20 180 Q 30 170 60 175 L 100 250 Z" fill="#18181b"/>
+                
+                {/* Nóżka kieliszka (tył) */}
+                <rect x="138" y="140" width="4" height="60" fill="#fbbf24" opacity="0.8"/>
 
+                {/* Palce (trzymające od spodu) */}
+                <path d="M100 180 Q 140 180 155 165 Q 160 160 150 155 Q 130 160 110 165 Z" fill="url(#skin-gradient)"/>
+                <path d="M105 190 Q 145 190 158 175 Q 163 170 153 165" fill="url(#skin-gradient)"/>
+                <path d="M110 200 Q 150 200 160 185 Q 165 180 155 175" fill="url(#skin-gradient)"/>
+
+                {/* Czasza kieliszka */}
+                <path d="M125 70 L 125 140 Q 125 155 140 155 Q 155 155 155 140 L 155 70 Z" fill="url(#glass-reflection)" stroke="#fbbf24" strokeWidth="1"/>
+                {/* Płyn w kieliszku */}
+                <path d="M127 90 L 127 138 Q 127 153 140 153 Q 153 153 153 138 L 153 90 Z" fill="url(#gold-liquid)" opacity="0.9"/>
+                
+                {/* Kciuk (na wierzchu) */}
+                <path d="M110 160 Q 125 140 145 150 Q 150 155 135 165 Q 120 170 110 160" fill="url(#skin-gradient)"/>
+                
+                {/* Bąbelki */}
+                <circle cx="135" cy="130" r="1.5" fill="white" className="animate-pulse"/>
+                <circle cx="145" cy="110" r="1" fill="white" className="animate-pulse delay-100"/>
+            </g>
+
+            {/* --- PRAWA STRONA --- */}
+            <g className="hand-right" transform-origin="300 250">
+                 {/* Rękaw marynarki */}
+                 <path d="M400 250 L 380 180 Q 370 170 340 175 L 300 250 Z" fill="#18181b"/>
+
+                 {/* Nóżka kieliszka (tył) */}
+                 <rect x="258" y="140" width="4" height="60" fill="#fbbf24" opacity="0.8"/>
+
+                 {/* Palce (trzymające od spodu) */}
+                 <path d="M300 180 Q 260 180 245 165 Q 240 160 250 155 Q 270 160 290 165 Z" fill="url(#skin-gradient)"/>
+                 <path d="M295 190 Q 255 190 242 175 Q 237 170 247 165" fill="url(#skin-gradient)"/>
+                 <path d="M290 200 Q 250 200 240 185 Q 235 180 245 175" fill="url(#skin-gradient)"/>
+
+                 {/* Czasza kieliszka */}
+                 <path d="M245 70 L 245 140 Q 245 155 260 155 Q 275 155 275 140 L 275 70 Z" fill="url(#glass-reflection)" stroke="#fbbf24" strokeWidth="1"/>
+                 {/* Płyn w kieliszku */}
+                 <path d="M247 90 L 247 138 Q 247 153 260 153 Q 273 153 273 138 L 273 90 Z" fill="url(#gold-liquid)" opacity="0.9"/>
+
+                 {/* Kciuk (na wierzchu) */}
+                 <path d="M290 160 Q 275 140 255 150 Q 250 155 265 165 Q 280 170 290 160" fill="url(#skin-gradient)"/>
+
+                 {/* Bąbelki */}
+                <circle cx="260" cy="120" r="1.5" fill="white" className="animate-pulse delay-75"/>
+                <circle cx="255" cy="140" r="1" fill="white" className="animate-pulse delay-200"/>
+            </g>
+
+            {/* --- BŁYSK (SPARK) --- */}
+            <g className="spark" style={{transformBox: 'fill-box', transformOrigin: 'center'}}>
+                <path d="M200 50 L 205 90 L 240 95 L 205 100 L 200 140 L 195 100 L 160 95 L 195 90 Z" fill="white" filter="drop-shadow(0 0 8px white)"/>
+            </g>
+
+        </svg>
       </div>
     </div>
   );
